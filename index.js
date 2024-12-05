@@ -24,40 +24,30 @@ function traitement()
     div.innerHTML = div.innerHTML + "<br>Resultat: " + resultat ;
 }
 
-
-
-function tasync()
+function attendreQuelquesSecondes( nbSeconde, message )
 {
     // On cree une promise
-    let promise = new Promise( (resolve, reject)=>
+    return new Promise( (resolve, reject)=>
     {
         setTimeout( ()=>
         {
-            resolve( "1 seconde plus tard") ;
-        }, 1000) ;
+            resolve( message ) ;
+        }, nbSeconde*1000) ;
     }) ;
+}
 
-    promise.then( (valeur)=>
-    {
-        let div = document.querySelector( "#main") ;
-        div.innerHTML = div.innerHTML + "<br>Resultat: " + valeur ;
+async function tasync()
+{
+    let div = document.querySelector( "#main") ;
+    div.innerHTML = div.innerHTML + "<br>Depart du traitement asynchrone" ;
 
-        return new Promise( (resolve, reject)=>
-        {
-            setTimeout( ()=>
-            {
-                resolve( "2 seconde plus tard") ;
-            }, 2000) ;
-        });
-    }).then( (valeur)=>
-    {
-        let div = document.querySelector( "#main") ;
-        div.innerHTML = div.innerHTML + "<br>Resultat juste après: " + valeur ;
-    }).then( (valeur)=>
-    {
-        let div = document.querySelector( "#main") ;
-        div.innerHTML = div.innerHTML + "<br>Terminé " + valeur ;
-    }) ;
+    let texte = await attendreQuelquesSecondes( 3, "au bout de 3 secondes") ;
+
+    div.innerHTML = div.innerHTML + "<br>Resultat: " + texte ;
+
+    texte = await attendreQuelquesSecondes( 2, "au bout de 2 secondes") ;
+
+    div.innerHTML = div.innerHTML + "<br>Resultat: " + texte ;
 
 
 }
