@@ -39,13 +39,11 @@ function attendreQuelquesSecondes( nbSeconde, message )
 async function tasync()
 {
     let div = document.querySelector( "#main") ;
-    div.innerHTML = div.innerHTML + "<br>Depart du traitement asynchrone" ;
+    div.innerHTML = div.innerHTML + "<br>On lance le fetch" ;
 
-    let texte = await attendreQuelquesSecondes( 3, "au bout de 3 secondes") ;
+    let reponse = await window.fetch( "http://localhost/TPasync/script.php" ) ;
 
-    div.innerHTML = div.innerHTML + "<br>Resultat: " + texte ;
-
-    texte = await attendreQuelquesSecondes( 2, "au bout de 2 secondes") ;
+    let texte = await reponse.text() ;
 
     div.innerHTML = div.innerHTML + "<br>Resultat: " + texte ;
 
