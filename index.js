@@ -41,21 +41,37 @@ async function tasync()
     let div = document.querySelector( "#main") ;
     div.innerHTML = div.innerHTML + "<br>On lance le fetch" ;
 
-    let a = 12 ;
-    let b = 4 ;
+    let sql = "select * from objet where periodeVisibilite='Hiver'" ;
 
-    // Multiplication à distance faite par un script php
-    let url = "http://localhost/TPasync/multiplier.php?a=" + a
-    + "&b=" + b ;
-
-    url = window.location.href + "multiplier.php?a=" + a
-    + "&b=" + b ;
+    let url = "http://localhost/TPasync/sql.php?sql=" + sql ;
 
     let reponse = await window.fetch( url ) ;
 
     let texte = await reponse.text() ;
 
-    div.innerHTML = div.innerHTML + "<br>Resultat: " + texte ;
+    let data = JSON.parse( texte ) ;
+
+    let html = "<table>" ;
+    for( let i=0 ; i<data.length; i++ )
+    {
+        if( !i )
+        {
+            html + "<tr>" ;
+            for( let champ in data[i] )
+            {
+                html += "<td><b>" + champ + "</b></td>" ;
+            }
+            html += "</tr>" ;    
+        }
+        html + "<tr>" ;
+        for( let champ in data[i] )
+        {
+            html += "<td>" + data[i][champ] + "</td>" ;
+        }
+        html += "</tr>" ;
+    }
+    html += "<table>" ;
 
 
+    div.innerHTML = div.innerHTML + "<br>" + html ;
 }
