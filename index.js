@@ -24,23 +24,40 @@ function traitement()
     div.innerHTML = div.innerHTML + "<br>Resultat: " + resultat ;
 }
 
+
+
 function tasync()
 {
-    setTimeout( function()
+    // On cree une promise
+    let promise = new Promise( (resolve, reject)=>
+    {
+        setTimeout( ()=>
+        {
+            resolve( "1 seconde plus tard") ;
+        }, 1000) ;
+    }) ;
+
+    promise.then( (valeur)=>
     {
         let div = document.querySelector( "#main") ;
-        div.innerHTML = div.innerHTML + "<br>2 secondes plus tard!" ;    
+        div.innerHTML = div.innerHTML + "<br>Resultat: " + valeur ;
 
-        setTimeout( function()
+        return new Promise( (resolve, reject)=>
         {
-            let div = document.querySelector( "#main") ;
-            div.innerHTML = div.innerHTML + "<br>3 secondes plus tard!" ;  
-            
-            setTimeout( function()
+            setTimeout( ()=>
             {
-                let div = document.querySelector( "#main") ;
-                div.innerHTML = div.innerHTML + "<br>1 seconde plus tard!" ;      
-            }, 1000)
-        }, 3000) ;
-    }, 2000 ) ;
+                resolve( "2 seconde plus tard") ;
+            }, 2000) ;
+        });
+    }).then( (valeur)=>
+    {
+        let div = document.querySelector( "#main") ;
+        div.innerHTML = div.innerHTML + "<br>Resultat juste après: " + valeur ;
+    }).then( (valeur)=>
+    {
+        let div = document.querySelector( "#main") ;
+        div.innerHTML = div.innerHTML + "<br>Terminé " + valeur ;
+    }) ;
+
+
 }
