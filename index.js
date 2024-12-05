@@ -41,7 +41,17 @@ async function tasync()
     let div = document.querySelector( "#main") ;
     div.innerHTML = div.innerHTML + "<br>On lance le fetch" ;
 
-    let reponse = await window.fetch( "http://localhost/TPasync/script.php" ) ;
+    let a = 12 ;
+    let b = 4 ;
+
+    // Multiplication à distance faite par un script php
+    let url = "http://localhost/TPasync/multiplier.php?a=" + a
+    + "&b=" + b ;
+
+    url = window.location.href + "multiplier.php?a=" + a
+    + "&b=" + b ;
+
+    let reponse = await window.fetch( url ) ;
 
     let texte = await reponse.text() ;
 
